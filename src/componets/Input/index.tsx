@@ -11,3 +11,11 @@ export const Input = (props: InputProps) => {
     />
   );
 };
+
+export const Label = ({ text }) => {
+  return (
+    <label htmlFor="" className="text-white font-medium  mt-3 ">
+      {text}
+    </label>
+  );
+};

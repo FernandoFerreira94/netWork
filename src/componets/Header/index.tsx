@@ -12,7 +12,7 @@ export default function Header() {
     toast.info("Voçê foi deslogado");
   }
   return (
-    <header className="w-full max-w-2xl mt-4 px-1">
+    <header className="w-full max-w-2xl mt-5 px-1">
       <nav className="w-full bg-white h-12 items-center flex justify-between px-4 rounded-md">
         <div className="flex gap-5 font-medium">
           <LinkHeader url="/" text="Home" />
