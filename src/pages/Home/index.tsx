@@ -76,7 +76,7 @@ export default function Home() {
             instagram: snapshot.data()?.instagram,
             facebook: snapshot.data()?.facebook,
             youtube: snapshot.data()?.youtube,
-            gitHub: snapshot.data()?.github,
+            gitHub: snapshot.data()?.gitHub,
             portifole: snapshot.data()?.portifole,
           });
         }
