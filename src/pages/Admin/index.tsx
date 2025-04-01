@@ -6,6 +6,7 @@ export default function Admin() {
     <>
       <div className="w-full min-h-screen  flex flex-col items-center  pb-7 px-2">
         <Header />
+
         <Form />
       </div>
     </>

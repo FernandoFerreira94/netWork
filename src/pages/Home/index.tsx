@@ -1,19 +1,99 @@
+import { useState, useEffect } from "react";
+import {
+  collection,
+  query,
+  orderBy,
+  onSnapshot,
+  doc,
+  getDoc,
+} from "firebase/firestore";
+
+import { Db } from "../../service/fireBaseConnection";
 import Icon from "../../componets/Icon";
 import {
   PiInstagramLogo,
   PiFacebookLogo,
-  PiGithubLogo,
   PiYoutubeLogo,
+  PiGithubLogo,
 } from "react-icons/pi";
-import { SiGmail } from "react-icons/si";
+import { RiAccountCircleLine } from "react-icons/ri";
 
 import Section from "../../componets/Section";
+import { toast } from "react-toastify";
 
-interface SectionProps {
-  title: string;
+interface SocialNetworkProps {
+  id: string;
+  name: string;
   link: string;
+  color: string;
+  bg: string;
 }
+
+interface SociaLinkProps {
+  facebook?: string;
+  instagram?: string;
+  youtube?: string;
+  gitHub?: string;
+  portifole?: string;
+}
+
 export default function Home() {
+  const [redeSocial, setRedeSocial] = useState<SocialNetworkProps[]>([]);
+
+  const [socialLink, setSocialLink] = useState<SociaLinkProps | null>(null);
+
+  // Get info das rede Sociais
+  useEffect(() => {
+    const docRef = collection(Db, "netWork");
+    const queryRef = query(docRef, orderBy("created", "asc"));
+    const unSub = onSnapshot(queryRef, (snapshot) => {
+      const lista: SocialNetworkProps[] = [];
+      snapshot.forEach((doc) => {
+        lista.push({
+          id: doc.id,
+          name: doc.data().name || "",
+          link: doc.data().link || "",
+          color: doc.data().color || "#000000",
+          bg: doc.data().bg || "#ffffff",
+        });
+      });
+      setRedeSocial(lista);
+    });
+    return () => unSub();
+  }, [redeSocial]);
+
+  // Get links instagram / youtube / facebook
+  useEffect(() => {
+    loadSocial();
+  }, []);
+
+  async function loadSocial() {
+    const docRef = doc(Db, "social", "link");
+    await getDoc(docRef)
+      .then((snapshot) => {
+        if (snapshot.data() !== undefined) {
+          setSocialLink({
+            instagram: snapshot.data()?.instagram,
+            facebook: snapshot.data()?.facebook,
+            youtube: snapshot.data()?.youtube,
+            gitHub: snapshot.data()?.github,
+            portifole: snapshot.data()?.portifole,
+          });
+        }
+      })
+      .catch(() => {
+        toast.warn("Email e senha invalido");
+      });
+  }
+
+  if (!socialLink) {
+    return (
+      <div className="w-full h-screen flex items-center justify-center ">
+        <h1 className="font-medium text-white text-2xl">Carregando...</h1>
+      </div>
+    );
+  }
+
   return (
     <>
       <div className="flex flex-col w-full py-4 items-center justify-center">
@@ -23,49 +103,39 @@ export default function Home() {
         <span className="text-gray-50 mb-5 mt-3">Veja meus links 👇</span>
 
         <main className="flex flex-col w-11/12 max-w-xl text-center ">
-          <Section
-            title="Instagram"
-            link="https://www.instagram.com/fernando.ferreira._/"
-            bg="#7df589"
-          />
-          <Section
-            title="Canal YouTube"
-            bg="red"
-            link="https://www.youtube.com/"
-          />
-          <Section
-            title="Facebook"
-            bg="#3b5998"
-            link="https://www.facebook.com/fernando.ferreira.988926/?locale=pt_BR"
-          />
-          <Section
-            title="GitHub"
-            link="https://github.com/FernandoFerreira94"
-            bg="#b8e3f2"
-          />
-          <Section
-            title="Gmail"
-            link="https://mail.google.com/mail/u/0/#inbox"
-          />
-
+          {redeSocial.map((doc, index) => (
+            <Section
+              key={index}
+              title={doc.name}
+              link={doc.link}
+              bg={doc.bg}
+              color={doc.color}
+            />
+          ))}
+        </main>
+        {socialLink && Object.keys(socialLink).length > 0 && (
           <footer className="flex justify-center gap-3 my-4">
-            <Icon url="https://www.instagram.com/fernando.ferreira._/">
-              <PiInstagramLogo size={40} color="#fff" />
+            <Icon url={socialLink?.instagram || ""}>
+              <PiInstagramLogo size={40} />
             </Icon>
-            <Icon url="https://www.instagram.com/fernando.ferreira._/">
+
+            <Icon url={socialLink?.youtube || ""}>
               <PiYoutubeLogo size={40} />
             </Icon>
-            <Icon url="https://www.instagram.com/fernando.ferreira._/">
-              <PiFacebookLogo size={40} color="#3b5998" />
+
+            <Icon url={socialLink?.facebook || ""}>
+              <PiFacebookLogo size={40} />
             </Icon>
-            <Icon url="https://www.instagram.com/fernando.ferreira._/">
-              <PiGithubLogo size={40} color="#fff" />
+
+            <Icon url={socialLink?.gitHub || ""}>
+              <PiGithubLogo size={40} />
             </Icon>
-            <Icon url="https://www.instagram.com/fernando.ferreira._/">
-              <SiGmail size={40} color="#ff0000" />
+
+            <Icon url={socialLink?.portifole || ""}>
+              <RiAccountCircleLine size={40} />
             </Icon>
           </footer>
-        </main>
+        )}
       </div>
     </>
   );

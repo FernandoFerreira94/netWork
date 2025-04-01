@@ -19,18 +19,23 @@ export default function Login() {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm();
+  } = useForm<RegisterProps>();
 
   const navigate = useNavigate();
 
   async function handleLogin(data: RegisterProps) {
+    if (!data.email || !data.password) {
+      console.error("E-mail ou senha ausentes!");
+      return;
+    }
+
     await signInWithEmailAndPassword(auth, data.email, data.password)
       .then(() => {
         navigate("/admin");
         reset();
-        toast.success("Sejá bem vindo 😀");
+        toast.success("Sejá bem vindo Fernando 😀");
       })
-      .catch((error) => console.log(error));
+      .catch(() => toast.warn("Email e senha invalidos"));
   }
   return (
     <>
