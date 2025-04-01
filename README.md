@@ -1,54 +1,48 @@
-# React + TypeScript + Vite
+# Rede Social 🎉
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este é um projeto de rede social onde os usuários podem acessar links para suas redes sociais, como **Instagram**, **Facebook**, **GitHub** e **Portfólio**. Além disso, há funcionalidades para **gerenciar links**, **adicionar novas redes** e **autenticação via Firebase**.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## ✨ Funcionalidades Principais
 
-## Expanding the ESLint configuration
+- **Visualização de Redes Sociais**:
+  Links para redes sociais de fácil acesso e interação.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **Sistema de Login**:
+  Autenticação segura utilizando o Firebase Authentication.
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+- **Gerenciamento de Links**:
+  Opção de atualizar ou adicionar novas redes sociais diretamente.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+- **Notificações Interativas**:
+  Feedback visual através de **Toastify** para ações do usuário.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- **Rotas Privadas**:
+  Proteção de rotas para acessar áreas restritas.
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+---
+
+## 🚀 Tecnologias Utilizadas
+
+### **Frontend**
+- **React.js**: Biblioteca para construção de interfaces de usuário.
+- **TypeScript**: Superset do JavaScript que adiciona tipagem estática ao projeto.
+- **TailwindCSS**: Framework CSS para estilização responsiva e moderna.
+- **React-Toastify**: Feedback visual para ações realizadas.
+- **React Router DOM**: Gerenciamento de navegação e rotas.
+
+### **Backend**
+- **Firebase**:
+  - **Firestore**: Banco de dados NoSQL para armazenamento dos links de redes sociais.
+  - **Authentication**: Autenticação com suporte para e-mail/senha.
+
+---
+
+## 🛠️ Configuração Local
+
+Siga estas etapas para rodar o projeto localmente:
+
+### 1. Clone o repositório:
+```bash
+git clone https://github.com/seuusuario/seurepositorio.git
